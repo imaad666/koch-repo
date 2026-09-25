@@ -5,7 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kochi Repo</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
@@ -19,6 +23,55 @@
   </header>
 
   <main id="archive" class="archive" aria-live="polite"></main>
+
+  <!-- Admin chrome (only shown when logged in) -->
+  <div id="adminDock" class="adminDock hidden" aria-label="Admin controls">
+    <span class="adminDockLabel">Admin</span>
+    <button type="button" id="adminAddBtn" class="adminDockBtn">Add</button>
+    <button type="button" id="adminLogoutBtn" class="adminDockBtn">Logout</button>
+  </div>
+
+  <div id="adminSheet" class="adminSheet hidden" aria-hidden="true">
+    <div class="adminSheetBackdrop" id="adminSheetBackdrop"></div>
+    <div class="adminSheetPanel" role="dialog" aria-modal="true" aria-labelledby="adminSheetTitle">
+      <div class="adminSheetHeader">
+        <h2 id="adminSheetTitle">Add photo</h2>
+        <button type="button" id="adminSheetClose" class="adminSheetClose">Close</button>
+      </div>
+
+      <form id="adminForm" class="adminForm">
+        <div class="field" id="adminFileField">
+          <label for="adminFile">Photo</label>
+          <input type="file" id="adminFile" name="file" accept="image/*" />
+        </div>
+
+        <img id="adminPreview" class="uploadPreview hidden" alt="" />
+
+        <div class="field">
+          <label for="adminTitle">Title</label>
+          <input type="text" id="adminTitle" name="title" required />
+        </div>
+
+        <div class="field">
+          <label for="adminDate">Date taken</label>
+          <input type="date" id="adminDate" name="date" required />
+        </div>
+
+        <div class="field">
+          <label for="adminLocation">Location</label>
+          <input type="text" id="adminLocation" name="location" />
+        </div>
+
+        <div class="field">
+          <label for="adminNote">Note</label>
+          <textarea id="adminNote" name="note" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="authButton" id="adminSubmitBtn">Save</button>
+        <div id="adminFormMessage" class="formMessage"></div>
+      </form>
+    </div>
+  </div>
 
   <script type="module" src="./app.js"></script>
 </body>
