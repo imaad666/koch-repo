@@ -1,0 +1,14 @@
+{
+  "name": "koch-repo",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "migrate": "node scripts/migrate-existing-photos.js"
+  },
+  "dependencies": {
+    "cloudinary": "^2.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
