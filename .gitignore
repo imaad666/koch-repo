@@ -1,0 +1,12 @@
+# Ignore Cursor project metadata/rules
+.cursor/
+.cursorignore
+
+# Env vars and dependencies
+.env
+.env.local
+!.env.example
+node_modules/
+
+.vercel
+.DS_Store
