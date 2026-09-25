@@ -1,0 +1,743 @@
+/* Clean white aesthetic */
+
+:root {
+  --bg: #fbf6ee;
+  --surface: rgba(255, 255, 255, 0.78);
+  --text: #111111;
+  --muted: #888888;
+  --border: rgba(0, 0, 0, 0.07);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --font-title: "Bodoni Moda", "Times New Roman", Times, serif;
+  --font-ui: "Merriweather", Georgia, serif;
+  /* Soft dissolve into the page — longer, eased stops (less “cut”, more print-like). */
+  --photo-fade-y: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.12) 3%,
+      rgba(0, 0, 0, 0.45) 8%,
+      rgba(0, 0, 0, 0.82) 16%,
+      #000 26%,
+      #000 74%,
+      rgba(0, 0, 0, 0.82) 84%,
+      rgba(0, 0, 0, 0.45) 92%,
+      rgba(0, 0, 0, 0.12) 97%,
+      transparent 100%);
+  --photo-fade-x: linear-gradient(to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.1) 2.5%,
+      rgba(0, 0, 0, 0.4) 7%,
+      rgba(0, 0, 0, 0.8) 14%,
+      #000 24%,
+      #000 76%,
+      rgba(0, 0, 0, 0.8) 86%,
+      rgba(0, 0, 0, 0.4) 93%,
+      rgba(0, 0, 0, 0.1) 97.5%,
+      transparent 100%);
+  --photo-fade-radial: radial-gradient(ellipse 96% 94% at 50% 48%,
+      #000 52%,
+      rgba(0, 0, 0, 0.92) 68%,
+      rgba(0, 0, 0, 0.55) 82%,
+      rgba(0, 0, 0, 0.18) 92%,
+      transparent 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  /* Keep background stable/minimal */
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+    "Segoe UI Emoji";
+}
+
+.topbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.brand {
+  font-family: 'Merriweather', Georgia, serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.yearPicker {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.yearPicker select {
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: transparent;
+  padding: 8px 36px 8px 14px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-family: 'Merriweather', Georgia, serif;
+  color: var(--text);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: calc(100% - 12px) 50%;
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+}
+
+.yearPicker select:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.archive {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 20px 18px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.yearGroup {
+  margin-top: 10px;
+}
+
+.yearHeading {
+  text-align: center;
+  font-family: 'Merriweather', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  margin: 72px 0 28px;
+  padding-bottom: 14px;
+  color: rgba(0, 0, 0, 0.58);
+  font-size: 1.55rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  width: min(220px, 60vw);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.yearGroup:first-child .yearHeading {
+  margin-top: 36px;
+}
+
+.photoFigure {
+  width: min(420px, 92vw);
+  margin: 0 0 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbnailButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.thumbnailButton:focus,
+.thumbnailButton:focus-visible {
+  outline: none;
+}
+
+.thumbnailButton:focus-visible .imageWrap {
+  /* Keep keyboard a11y without a hard selection box around soft-edged photos. */
+  outline: none;
+  box-shadow: none;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  /* Preserve original aspect ratio; avoid fixed height to prevent letterboxing */
+  height: auto;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageWrap img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  -webkit-mask-image: var(--photo-fade-y), var(--photo-fade-x), var(--photo-fade-radial);
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: var(--photo-fade-y), var(--photo-fade-x), var(--photo-fade-radial);
+  mask-composite: intersect, intersect;
+}
+
+.noteOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  /* note appears at the top of the picture */
+  justify-content: center;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.photoFigure.openNote .noteOverlay {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.noteInner {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 14px;
+  padding: 12px 12px 10px;
+}
+
+.noteText {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.78);
+  font-size: 0.98rem;
+  line-height: 1.35;
+  white-space: pre-wrap;
+}
+
+.noteHint {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.caption {
+  text-align: center;
+  padding-top: 12px;
+}
+
+.titleButton {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  transition: opacity 150ms ease;
+}
+
+.titleButton:hover {
+  opacity: 0.6;
+}
+
+.titleButton:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.captionDate {
+  margin-top: 4px;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noteOverlay {
+    transition: none;
+  }
+
+  .modalOverlay,
+  .modalPanel,
+  .lightboxFly {
+    transition: none !important;
+  }
+}
+
+/* Lightbox modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 32px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.modalOverlay.is-dimmed,
+.modalOverlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalOverlay.is-closing {
+  opacity: 0;
+  transition: opacity 380ms cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: auto;
+}
+
+.modalPanel {
+  position: relative;
+  width: min(1100px, 100%);
+  max-height: 94vh;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.modalOverlay.is-expanding .modalClose,
+.modalOverlay.is-expanding .modalCaption,
+.modalOverlay.is-expanding .modalNote,
+.modalOverlay.is-expanding .modalImageWrap img {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.modalClose {
+  position: absolute;
+  top: -4px;
+  right: 0;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 8px 4px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  transition: color 150ms ease, opacity 220ms ease;
+  opacity: 1;
+}
+
+.modalClose:hover {
+  color: #fff;
+  opacity: 1;
+}
+
+.modalImageWrap {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1px;
+}
+
+.modalImageWrap img {
+  width: auto;
+  max-width: 100%;
+  max-height: min(78vh, 860px);
+  object-fit: contain;
+  display: block;
+}
+
+.modalCaption {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 90%;
+  transition: opacity 220ms ease;
+}
+
+.modalTitle {
+  font-family: var(--font-title);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.modalCaption .captionDate {
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.modalNote {
+  max-width: 36rem;
+  padding: 0 8px;
+  border: 0;
+  text-align: center;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: pre-wrap;
+  transition: opacity 220ms ease;
+}
+
+/* The actual photo that grows out of the thumbnail (iOS-style). */
+.lightboxFly {
+  position: fixed;
+  z-index: 70;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
+.lightboxFly-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Soft-edge copy (matches home thumbnails). */
+.lightboxFly-soft {
+  z-index: 2;
+  opacity: 1;
+  transition: opacity 340ms cubic-bezier(0.32, 0.72, 0, 1);
+  -webkit-mask-image: var(--photo-fade-y), var(--photo-fade-x), var(--photo-fade-radial);
+  -webkit-mask-composite: source-in, source-in;
+  mask-image: var(--photo-fade-y), var(--photo-fade-x), var(--photo-fade-radial);
+  mask-composite: intersect, intersect;
+}
+
+/* Sharp full copy underneath. */
+.lightboxFly-sharp {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 340ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* While expanding: soft edges fade out, sharp photo fades in. */
+.lightboxFly.is-full {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+}
+
+.lightboxFly.is-full .lightboxFly-soft {
+  opacity: 0;
+}
+
+.lightboxFly.is-full .lightboxFly-sharp {
+  opacity: 1;
+}
+
+.imageWrap img.is-lightboxSource {
+  opacity: 0 !important;
+}
+
+.archiveStatus {
+  margin: 72px auto 0;
+  text-align: center;
+  font-family: 'Merriweather', Georgia, serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.02em;
+}
+
+.photoAdminActions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.photoAdminBtn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.photoAdminBtn:hover {
+  color: var(--text);
+}
+
+.photoAdminBtnDanger:hover {
+  color: #9b1c1c;
+}
+
+.adminDock {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(251, 246, 238, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.adminDockLabel {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.45);
+  padding-right: 4px;
+}
+
+.adminDockBtn {
+  border: 0;
+  background: transparent;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.adminDockBtn:hover {
+  opacity: 0.6;
+}
+
+.adminSheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.adminSheetBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.adminSheetPanel {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  max-height: min(88vh, 760px);
+  overflow: auto;
+  background: var(--bg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px 18px 0 0;
+  padding: 18px 18px 28px;
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.adminSheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.adminSheetHeader h2 {
+  margin: 0;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.adminSheetClose {
+  border: 0;
+  background: transparent;
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 0.85rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.adminForm .field {
+  margin-bottom: 14px;
+}
+
+body.is-admin .archive {
+  padding-bottom: 96px;
+}
+
+@media (min-width: 720px) {
+  .adminSheet {
+    align-items: center;
+    padding: 24px;
+  }
+
+  .adminSheetPanel {
+    border-radius: 18px;
+  }
+}
+
+/* Auth / upload pages */
+.authPage {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.authCard {
+  width: min(420px, 100%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 28px 26px;
+}
+
+.authCard h1 {
+  margin: 0 0 18px;
+  font-size: 1.2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.field input,
+.field textarea {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.authButton {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--text);
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.authButton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.formMessage {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.formMessage.error {
+  color: #b3261e;
+}
+
+.formMessage.success {
+  color: #146c2e;
+}
+
+.uploadPreview {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.imageError {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.88);
+  color: rgba(0, 0, 0, 0.72);
+  text-align: center;
+  font-size: 0.95rem;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
